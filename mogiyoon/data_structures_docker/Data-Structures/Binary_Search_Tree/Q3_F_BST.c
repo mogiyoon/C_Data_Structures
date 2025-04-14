@@ -91,7 +91,12 @@ int main()
 
 void preOrderIterative(BSTNode *root)
 {
-	 /* add your code here */
+	Stack* tmpStack = (Stack*)malloc(sizeof(Stack));
+	
+	BSTNode* tmpNode = root;
+	printf("%d ", tmpNode->item);
+	
+
 }
 
 ///////////////////////////////////////////////////////////////////////////////

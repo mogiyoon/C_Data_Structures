@@ -27,7 +27,7 @@ typedef struct _linkedlist
 //////////////////////// function prototypes /////////////////////////////////////
 
 // You should not change the prototype of this function
-int moveMaxToFront(ListNode **ptrHead);
+void moveMaxToFront(ListNode **ptrHead);
 
 void printList(LinkedList *ll);
 void removeAllItems(LinkedList *ll);
@@ -86,9 +86,32 @@ int main()
 
 ////////////////////////////////////////////////////////////////////////
 
-int moveMaxToFront(ListNode **ptrHead)
+void moveMaxToFront(ListNode **ptrHead)
 {
-    /* add your code here */
+	ListNode* tempNode;
+	tempNode = (ListNode*)malloc(sizeof(ListNode));
+	ListNode* maxPrevNode;
+	maxPrevNode = (ListNode*)malloc(sizeof(ListNode));
+	ListNode* maxNode;
+	maxNode = (ListNode*)malloc(sizeof(ListNode));
+
+	tempNode = (*ptrHead);
+	int maxValue = tempNode->item;
+	maxPrevNode = tempNode;
+
+	while (tempNode->next != NULL)
+	{
+		if (tempNode->next->item > maxValue) {
+			maxValue = tempNode->next->item;
+			maxPrevNode = tempNode;
+		}
+		tempNode = tempNode->next;
+	}
+
+	maxNode = maxPrevNode->next;
+	maxPrevNode->next = maxNode->next;
+	maxNode->next = (*ptrHead);
+	(*ptrHead) = maxNode;
 }
 
 //////////////////////////////////////////////////////////////////////////////////

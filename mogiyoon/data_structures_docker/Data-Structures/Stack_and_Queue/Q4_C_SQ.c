@@ -112,7 +112,51 @@ int main()
 
 void reverse(Queue *q)
 {
-/* add your code here */
+	Stack* tmpStack;
+	tmpStack = (Stack*)malloc(sizeof(Stack));
+
+	ListNode* tmpNode;
+	tmpNode = (ListNode*)malloc(sizeof(ListNode));
+	ListNode* tmpNext;
+	tmpNext = (ListNode*)malloc(sizeof(ListNode));
+	
+	//dequeue && push
+	tmpNode = q->ll.head;
+	while(tmpNode != NULL) {
+		tmpNext = tmpNode->next;
+		if (tmpStack->ll.head != NULL) {
+			tmpNode->next = tmpStack->ll.head;
+		} else {
+			tmpNode->next = NULL;
+		}
+		tmpStack->ll.head = tmpNode;
+
+		q->ll.head = tmpNext;
+		tmpNode = tmpNext;
+	}
+
+	if (tmpNode == NULL) {
+		q->ll.tail = NULL;
+	}
+
+	//pop & enqueue
+	tmpNode = tmpStack->ll.head;
+
+	if (q->ll.head == NULL) {
+		q->ll.head = tmpNode;
+	}
+
+	while(tmpNode != NULL) {
+		tmpNext = tmpNode->next;
+		tmpNode->next = NULL;
+		if (q->ll.tail != NULL) {
+			q->ll.tail->next = tmpNode;
+		}
+		q->ll.tail = tmpNode;
+
+		tmpStack->ll.head = tmpNext;
+		tmpNode = tmpNext;
+	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////

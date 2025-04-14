@@ -109,7 +109,13 @@ int main()
 
 void recursiveReverse(Queue *q)
 {
-/* add your code here */
+	if (q->ll.size > 0) {
+		ListNode* tmpNode;
+		tmpNode = (ListNode*)malloc(sizeof(ListNode));
+		tmpNode->item = dequeue(q);
+		recursiveReverse(q);
+		enqueue(q, tmpNode->item);
+	}
 }
 
 //////////////////////////////////////////////////////////////////

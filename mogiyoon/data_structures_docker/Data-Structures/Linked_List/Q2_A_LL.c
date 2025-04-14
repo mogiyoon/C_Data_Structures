@@ -78,7 +78,7 @@ int main()
 			printList(&ll2);
 			break;
 		case 3:
-		    printf("The resulting linked lists after merging the given linked list are:\n");
+			printf("The resulting linked lists after merging the given linked list are:\n");
 			alternateMergeLinkedList(&ll1, &ll2); // You need to code this function
 			printf("The resulting linked list 1: ");
 			printList(&ll1);
@@ -103,7 +103,36 @@ int main()
 
 void alternateMergeLinkedList(LinkedList *ll1, LinkedList *ll2)
 {
-    /* add your code here */
+		ListNode* nowNode;
+		ListNode* nextNode;
+		nowNode = (ListNode*)malloc(sizeof(ListNode));
+		nextNode = (ListNode*)malloc(sizeof(ListNode));
+		nowNode = ll1->head;
+		nextNode = ll1->head->next;
+
+		ListNode* moveNode;
+		moveNode = (ListNode*)malloc(sizeof(ListNode));
+		moveNode = ll2->head;
+
+		while (ll2->head != NULL) {
+			ll2->head = moveNode->next;
+			nowNode->next = moveNode;
+			moveNode->next = nextNode;
+
+			moveNode = ll2->head;
+			nowNode = nextNode;
+			if (nowNode -> next != NULL) {
+				nextNode = nowNode->next;
+			} else {
+				break;
+			}
+		}
+
+		if (nowNode->next == NULL && ll2->head != NULL) {
+			ll2->head = moveNode->next;
+			nowNode -> next = moveNode;
+			moveNode -> next = NULL;
+		}
 }
 
 ///////////////////////////////////////////////////////////////////////////////////
