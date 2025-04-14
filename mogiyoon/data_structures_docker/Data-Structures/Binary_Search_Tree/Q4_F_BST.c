@@ -93,29 +93,56 @@ void postOrderIterativeS1(BSTNode *root)
 {
 	Stack* tmpStack = (Stack*)malloc(sizeof(Stack));
 	BSTNode* tmpNode = root;
+	push(tmpStack, root);
 
+	//가장 먼저 나오는 노드까지 도달
 	while (tmpNode->left != NULL || tmpNode->right != NULL) {
 		if (tmpNode->left != NULL) {
 			tmpNode = tmpNode->left;
+			push(tmpStack, tmpNode);
 		} else if (tmpNode->right != NULL)
 		{
 			tmpNode = tmpNode->right;
+			push(tmpStack, tmpNode);
 		}
 	}
 
-	push(tmpStack, tmpNode);
-	
-	while(peek(tmpStack) != root)
-	{
-		tmpNode = root;
-		while(tmpNode->left != NULL && tmpNode->left != peek(tmpStack)) {
-			tmpNode = tmpNode->left;
-			if (tmpNode->right != NULL && tmpNode->right != peek(tmpStack)) {
-				tmpNode = tmpNode->right;
+	//스택이 빌 때까지
+	while (tmpStack->top != NULL) {
+		tmpNode = pop(tmpStack);
+		//루트노드면 출력 후 탈출 
+		if (tmpStack->top == NULL) {
+			printf("%d ", tmpNode->item);
+			break;
+		}
+
+		//부모 노드의 오른쪽 노드일 때는 그냥 출력
+		if (peek(tmpStack)->right == tmpNode) {
+			printf("%d ", tmpNode->item);
+		}
+
+		//부모 노드의 왼쪽 노드일 경우 출력한 뒤
+		else if (peek(tmpStack)->left == tmpNode) {
+			printf("%d ", tmpNode->item);
+
+			//부모 노드의 오른쪽 노드가 있을 경우 한 칸씩 이동하며
+			while (peek(tmpStack)->right != NULL) {
+				tmpNode = peek(tmpStack)->right;
+				push(tmpStack, tmpNode);
+
+				//가장 깊은 곳의 노드 찾음
+				while (tmpNode->left != NULL || tmpNode->right != NULL) {
+					if (tmpNode->left != NULL) {
+						tmpNode = tmpNode->left;
+						push(tmpStack, tmpNode);
+					} else if (tmpNode->right != NULL)
+					{
+						tmpNode = tmpNode->right;
+						push(tmpStack, tmpNode);
+					}
+				}
 			}
 		}
-		push(tmpStack, tmpNode);
-		printf("%d ", tmpNode->item);
 	}
 }
 
