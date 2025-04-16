@@ -94,10 +94,15 @@ int main()
 
 //////////////////////////////////////////////////////////////////////////////////
 
+int max(int a, int b){
+    if(a<b){
+        return b;
+    }else return a;
+}
 int maxHeight(BTNode *node)
-
 {
-    /* add your code here */
+    if(node->left==NULL && node->right==NULL) return 0;
+    else return max(maxHeight(node->left), maxHeight(node->right))+1;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////

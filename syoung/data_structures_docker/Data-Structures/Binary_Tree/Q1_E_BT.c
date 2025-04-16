@@ -114,9 +114,25 @@ int main()
 //////////////////////////////////////////////////////////////////////////////////
 
 int identical(BTNode *tree1, BTNode *tree2)
-
 {
-   /* add your code here */
+    if(tree1->item == tree2->item){
+        int left = 0;
+        int right = 0;
+        
+        if(tree1->left != NULL){
+            left = identical(tree1->left, tree2->left);
+        }
+        if(tree1->right != NULL){
+            right = identical(tree2->right, tree2->right);
+        }
+        if(tree1->left==NULL && tree1->right==NULL){
+            return 1;
+        }
+        return left*right;
+    
+    }else{
+        return 0;
+    }
 }
 
 /////////////////////////////////////////////////////////////////////////////////
@@ -146,7 +162,7 @@ BTNode *createTree()
     printf("Enter an integer value for the root: ");
     if(scanf("%d",&item) > 0)
     {
-        root = createBTNode(item);
+        root = createBTNode(item); //값이 item인 새로운 노드를 만들어서 root에 할당
         push(&stk,root);
     }
     else

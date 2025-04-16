@@ -86,7 +86,23 @@ int main()
 
 void moveOddItemsToBack(LinkedList *ll)
 {
-	/* add your code here */
+	if(ll->size==0) return;
+	if(ll->head==NULL) return;
+	int idx = 0;
+	int i;
+	//첫 번째 노드부터 순회하며 홀수 찾기
+	for(i=0; i<ll->size; i++){
+		ListNode* cur = findNode(ll, idx);
+		if(cur->item % 2 != 0){
+			insertNode(ll, ll->size, cur->item);
+			cur = cur->next;
+			removeNode(ll, idx);
+		}else{
+			cur = cur->next;
+			idx++;
+		}
+		
+	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////////

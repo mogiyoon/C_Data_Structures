@@ -88,9 +88,99 @@ int main()
 
 //////////////////////////////////////////////////////////////////////////////////
 
-int insertSortedLL(LinkedList *ll, int item)
-{
-	/* add your code here */
+// 틀린 코드 : 마지막 부분에 노드를 삽입하는 로직이 없음
+// int insertSortedLL(LinkedList *ll, int item)
+// {
+// 	//현재 LinkedList의 크기가 0이면 LinkedList가 비어있다는 뜻이므로 그냥 넣기
+// 	if(ll->size==0){
+// 		insertNode(ll, 0, item);
+// 		return 0; //첫 번째 인덱스에 넣었으므로 인덱스 0을 리턴
+// 	}
+// 	//크기가 0이 아니면 item이 이미 존재하는지 찾기
+// 	int i;
+// 	for(i=0; i<ll->size; ++i){
+// 		ListNode* found_node = findNode(ll, i);
+// 		if(found_node->item == item){ //이미 존재하면 -1 리턴
+// 			printf("already exist");
+// 			return -1;
+// 		}
+// 		if(found_node->item > item){ //item보다 큰 값을 발견하면 해당 값의 앞에 item을 삽입하기
+// 			insertNode(ll, i, item);
+// 			printf("inserted %d in %d", item, i);
+// 			return i; //삽입한 인덱스 리턴
+// 		}
+// 	}
+// 	return -1;
+// }
+
+// 맞는 코드 : 구현되어있는 함수를 사용했음
+// int insertSortedLL(LinkedList *ll, int item)
+// {
+// 	//현재 LinkedList의 크기가 0이면 LinkedList가 비어있다는 뜻이므로 그냥 넣기
+// 	if(ll->size==0){
+// 		insertNode(ll, 0, item);
+// 		return 0; //첫 번째 인덱스에 넣었으므로 인덱스 0을 리턴
+// 	}
+// 	//크기가 0이 아니면 item이 이미 존재하는지 찾기
+// 	int i;
+// 	for(i=0; i<ll->size; ++i){
+// 		ListNode* found_node = findNode(ll, i);
+// 		if(found_node->item == item){ //이미 존재하면 -1 리턴
+// 			printf("already exist");
+// 			return -1;
+// 		}
+// 		if(found_node->item > item){ //item보다 큰 값을 발견하면 해당 값의 앞에 item을 삽입하기
+// 			insertNode(ll, i, item);
+// 			printf("inserted %d in %d", item, i);
+// 			return i; //삽입한 인덱스 리턴
+// 		} else if(found_node->next==NULL){
+// 			insertNode(ll, i+1, item);
+// 			return i+1;
+// 		}
+// 	}
+// 	return -1;
+// }
+
+int insertSortedLL(LinkedList *ll, int item){
+	//create a new node in memory for a linked list and let newNode point to it.
+	ListNode* newNode = (ListNode*)malloc(sizeof(ListNode));
+	newNode->item = item;
+	newNode->next = NULL;
+
+	if(ll->head==NULL){
+		ll->head = newNode;
+		ll->size++;
+		return 0;
+	}
+
+	if(ll->head->item > item){
+		newNode->next = ll->head;
+		ll->head = newNode;
+		ll->size++;
+		return 0;
+	}
+
+	ListNode* cur = ll->head;
+	ListNode* prev = NULL;
+	int index = 0;
+	while(cur->next != NULL && cur->item < item){
+		prev = cur;
+		cur = cur->next;
+		index++;
+	}
+	if(cur->item == item){
+		return -1;
+	}
+	if(cur->next!=NULL){
+		prev->next = newNode;
+		newNode->next = cur;
+		ll->size++;
+		return index;
+	}
+	cur->next = newNode;
+	ll->size++;
+	return index;
+
 }
 
 ///////////////////////////////////////////////////////////////////////////////////
@@ -129,25 +219,29 @@ void removeAllItems(LinkedList *ll)
 
 
 ListNode *findNode(LinkedList *ll, int index){
+	//연결리스트 안에 있는 index번째의 노드를 찾아서 리턴하는 함수
 
 	ListNode *temp;
 
-	if (ll == NULL || index < 0 || index >= ll->size)
+	//head노드가 가리키는 값이 없거나, 인덱스값이 음수거나, 인덱스값이 현재 연결리스트 사이즈보다 클 경우 
+	if (ll == NULL || index < 0 || index >= ll->size) 
 		return NULL;
 
+	//첫 번째 노드를 temp에 저장
 	temp = ll->head;
 
+	//첫 번째 노드가 없거나 인덱스가 음수일 때
 	if (temp == NULL || index < 0)
 		return NULL;
 
-	while (index > 0){
-		temp = temp->next;
-		if (temp == NULL)
+	while (index > 0){ 
+		temp = temp->next; //다음 노드를 찾기
+		if (temp == NULL) //다음 노드가 없음
 			return NULL;
-		index--;
+		index--; //인덱스 크기 만큼 첫 번째 노드에서 다음 노드로 가기
 	}
 
-	return temp;
+	return temp; //index번째의 노드를 리턴
 }
 
 int insertNode(LinkedList *ll, int index, int value){

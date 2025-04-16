@@ -101,9 +101,14 @@ int main()
 //////////////////////////////////////////////////////////////////////////////////
 
 int sumOfOddNodes(BTNode *node)
-
 {
-    /* add your code here */
+    //홀수이면 값 리턴, 홀수가 아니면 0 리턴하여 리턴값을 누적
+    if(node==NULL) return 0; 
+    if(node->left==NULL && node->right==NULL){ //리프노드에 도달한 경우
+        if(node->item % 2 != 0) return node->item; //홀수이면 노드의 값 리턴
+        else return 0; //짝수이면 0 리턴
+    }
+    return sumOfOddNodes(node->left) + sumOfOddNodes(node->right); //리프노드가 아니면 두 자식 노드의 합을 리턴
 }
 
 //////////////////////////////////////////////////////////////////////////////////
