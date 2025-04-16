@@ -88,10 +88,27 @@ int main()
 }
 
 //////////////////////////////////////////////////////////////////////////////////
+//후위순회
+void postOrderIterativeS1(BSTNode *root){
+	Stack* s = malloc(sizeof(Stack));
+	s->top = NULL;
+	BSTNode* nowNode =root;
+	push(s,nowNode);
 
-void postOrderIterativeS1(BSTNode *root)
-{
-	 /* add your code here */
+	while(nowNode!=NULL && s->top != NULL){
+		if(nowNode->right!=NULL){
+			push(s,nowNode->right);
+		}
+		if(nowNode->left != NULL){
+			push(s,nowNode->left);
+		}
+		nowNode =pop(s);
+		printf("%d ",nowNode->item);
+		nowNode =pop(s);
+		printf("%d ",nowNode->item);
+		nowNode =pop(s);
+		printf("%d ",nowNode->item);
+	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////

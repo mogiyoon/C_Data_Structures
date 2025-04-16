@@ -8,7 +8,7 @@ Purpose: Implementing the required functions for Question 1 */
 
 #include <stdio.h>
 #include <stdlib.h>
-
+#include <malloc.h>
 //////////////////////////////////////////////////////////////////////////////////
 
 typedef struct _listnode{
@@ -71,7 +71,7 @@ int main()
 		case 3:
 			printf("The resulting sorted linked list is: ");
 			printList(&ll);
-			removeAllItems(&ll);
+			// removeAllItems(&ll);
 			break;
 		case 0:
 			removeAllItems(&ll);
@@ -90,9 +90,128 @@ int main()
 
 int insertSortedLL(LinkedList *ll, int item)
 {
-	/* add your code here */
+	// item으로 입력받은 값으로 노드를 하나 만들기
+	// 그 노드를 linkedlist에 넣자 -> 포인터로 연결해서 넣는건가...?
+	// 입력받은값이 이미 linkedlist에 존재하면 -1을 리턴
+	// 존재하지 않으면 삽입하는데 삽입하고 그때의 인덱스값을 리턴
+	
+	//새로운 노드 기본 설정
+	ListNode* newNode;
+	newNode = (ListNode*)malloc(sizeof(ListNode));
+	newNode->item = item;
+	newNode->next = NULL;
+	
+	ListNode* nextNode;			//변수 생성(다음 노드를 가리키는 것)
+	ListNode* nowNode;			//변수 생성(현재 노드를 가리키는 것)
+
+	int index = 0;
+
+	if (ll==NULL)
+		return -1;
+
+	if (ll->head==NULL){
+		ll->head = newNode;
+		ll->size+=1;
+		return index;
+	}else if(item < ll->head->item){
+		newNode->next = ll->head;
+		ll->head = newNode;
+	}else{
+		nextNode = ll->head;
+	}
+
+	while(item >nextNode->item && nextNode->next != NULL){
+		nowNode = nextNode;
+		nextNode = nextNode->next;
+		index +=1;
+	}
+
+	if(item < nextNode -> item){
+		nowNode->next = newNode;
+		newNode->next = nextNode;
+		ll->size+=1;
+		return index;
+	} else if(item ==nextNode->item){
+		return -1;
+	}else{
+		nextNode->next = newNode;
+		ll->size+=1;
+		return index;
+	}
+	
+
 }
 
+/*
+소영님 코드
+int insertSortedLL(LinkedList *ll, int item)
+{
+    //현재 LinkedList의 크기가 0이면 LinkedList가 비어있다는 뜻이므로 그냥 넣기
+    if(ll->size==0){
+        insertNode(ll, 0, item);
+        return 0; //첫 번째 인덱스에 넣었으므로 인덱스 0을 리턴
+    }
+    //크기가 0이 아니면 item이 이미 존재하는지 찾기
+    int i;
+    for(i=0; i<ll->size; ++i){
+        ListNode* found_node = findNode(ll, i);
+        if(found_node->item == item){ //이미 존재하면 -1 리턴
+            printf("already exist");
+            return -1;
+        }
+        if(found_node->item > item){ //item보다 큰 값을 발견하면 해당 값의 앞에 item을 삽입하기
+            insertNode(ll, i, item);
+            printf("inserted %d in %d", item, i);
+            return i; //삽입한 인덱스 리턴			
+        }
+		else if(found_node->next ==NULL ){
+			insertNode(ll,i+1,item);
+			printf("inserted %d in %d", item, i);
+			return i+1 ;
+		}
+    }
+    return -1;
+}
+*/
+
+// 기윤님코드
+/*
+int insertSortedLL(LinkedList *ll, int item)
+{
+  ListNode* newNode;
+  newNode = (ListNode*)malloc(sizeof(ListNode));
+  newNode -> item = item;
+  newNode -> next = NULL;
+  ListNode* nextNode;
+  ListNode* nowNode;
+  nextNode = (ListNode*)malloc(sizeof(ListNode));
+  nowNode = (ListNode*)malloc(sizeof(ListNode));
+  int index = 0;
+  if (ll -> head == NULL) {
+    ll -> head = newNode;
+    ll -> size += 1;
+    return index;
+  } else {
+    nextNode = ll -> head;
+  }
+  while (item > nextNode -> item && nextNode -> next != NULL) {
+    nowNode = nextNode;
+    nextNode = nextNode -> next;
+    index += 1;
+  }
+  if (item == nextNode -> item) {
+    return -1;
+  } else if (item < nextNode -> item) {
+    nowNode -> next = newNode;
+    newNode -> next = nextNode;
+    ll -> size += 1;
+    return index;
+  } else {
+    nextNode -> next = newNode;
+    return index;
+  }
+}
+*/
 ///////////////////////////////////////////////////////////////////////////////////
 
 void printList(LinkedList *ll){
@@ -127,7 +246,7 @@ void removeAllItems(LinkedList *ll)
 	ll->size = 0;
 }
 
-
+// k번째 인덱스의 값이 있는지 없는지 알려주는 함수
 ListNode *findNode(LinkedList *ll, int index){
 
 	ListNode *temp;

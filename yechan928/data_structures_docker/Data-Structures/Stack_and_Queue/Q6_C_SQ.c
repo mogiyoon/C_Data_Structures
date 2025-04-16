@@ -111,7 +111,12 @@ int main()
 
 void removeUntil(Stack *s, int value)
 {
-/* add your code here */
+	ListNode* cur = (s->ll).head;
+	while(cur != NULL && cur->item != value){
+		cur = cur->next;
+	}
+	(s->ll).head = cur;
+
 }
 
 //////////////////////////////////////////////////////////////////////////////////
