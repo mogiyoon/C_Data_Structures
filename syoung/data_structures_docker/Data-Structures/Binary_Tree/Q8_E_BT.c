@@ -100,9 +100,21 @@ int main()
 
 //////////////////////////////////////////////////////////////////////////////////
 
-int hasGreatGrandchild(BTNode *node)
-{
-	/* add your code here */
+int max(int a, int b){
+    if(a>b){
+        return a;
+    }
+    return b;
+}
+int hasGreatGrandchild(BTNode *node){ //노드의 depth가 4이면 그 노드 출력
+
+    if(node==NULL) return 0; //노드가 없는 곳
+    if(node->left==NULL && node->right==NULL) return 1; //리프노드
+    int depth = max(hasGreatGrandchild(node->left), hasGreatGrandchild(node->right)) + 1; //본인 노드 깊이 = 왼쪽, 오른쪽 중 더 깊은 depth를 선택 + 본인 노드 1
+    if(depth==4){ //깊이가 4이면 해당 노드의 값 출력
+        printf("%d", node->item);
+    }
+    return depth;
 }
 
 //////////////////////////////////////////////////////////////////////////////////

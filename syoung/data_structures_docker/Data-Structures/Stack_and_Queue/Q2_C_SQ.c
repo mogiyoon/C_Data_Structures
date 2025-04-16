@@ -113,7 +113,18 @@ int main()
 
 void createStackFromLinkedList(LinkedList *ll, Stack *s)
 {
-    /* add your code here */
+	//create a linked-list-based stack by pushing all integers that are storing in the linked list.
+	//the first node of the linked list is pushed first, and then the second node, and so on.
+	//if the stack is not empty, empty the stack at the beginning.
+	if(isEmptyStack(s)){
+		removeAllItemsFromStack(s);
+	}
+	ListNode* node = ll->head;
+	push(s, node->item);
+	while(node->next != NULL){
+		node = node->next;
+		push(s, node->item);
+	}
 }
 
 void removeEvenValues(Stack *s)

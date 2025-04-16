@@ -8,7 +8,7 @@ Purpose: Implementing the required functions for Question 7 */
 
 #include <stdio.h>
 #include <stdlib.h>
-
+#include <string.h>
 #define MIN_INT -1000
 
 //////////////////////////////////////////////////////////////////////////////////
@@ -84,9 +84,9 @@ int main()
 			scanf("%s", str);
 			break;
         case 2:
-            if(balanced(str))
+            if(balanced(str)) //양수 리턴 -> 균형 아님
                 printf("not balanced!\n");
-            else
+            else //음수 리턴 -> 균형
                 printf("balanced!\n");
 			break;
 		case 0:
@@ -104,7 +104,28 @@ int main()
 ////////////////////////////////////////////////////////////
 int balanced(char *expression)
 {
-/* add your code here */
+	//균형이면 0반환??
+	//한 글자씩 확인 -> 여는 괄호면 스택에 넣고 닫는 괄호면 스택에서 한 개 peek해서 모양이 일치하는지 확인 
+	Stack* s = (Stack*)malloc(strlen(expression)*sizeof(char));
+	
+	for(int i=0; i<strlen(expression); i++){
+		char c = expression[i];
+		if(c==')' || c=='}' || c==']') return 1;
+		// printf("the expression is %c\n", c);
+		if(c=='(' || c=='{' || c=='['){ //여는 괄호
+			push(s, c); //여는 괄호는 넣기
+			continue;
+		}
+		char tmp = peek(s);
+		if((tmp=='(' && c==')') || (tmp=='{' && c=='}') || (tmp=='[' && c==']')){
+			pop(s);
+			continue;
+		}
+	}
+	if(s->ll.head == NULL){
+		return 0;
+	}else return 1;
+
 }
 
 ////////////////////////////////////////////////////////////

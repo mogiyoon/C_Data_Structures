@@ -103,7 +103,36 @@ int main()
 
 int isStackPairwiseConsecutive(Stack *s)
 {
-  /* add your code here */
+	// ListNode* cur = s->ll.head;
+	// //요소 수가 홀수이면 0 리턴
+  	// if(s->ll.size % 2 != 0){
+	// 	printf("it's odd number...");
+	// 	return 0;
+  	// }
+	// //모든 인접한 수가 연속된 수이면 1 리턴
+	// ListNode* n1 = s->ll.head;
+	// ListNode* n2 = n1->next;
+	// while(n2->next->next != NULL){
+	// 	if((n1->item+1) != n2->item && (n1->item-1) != n2->item){
+	// 		printf("%d and %d is not consecutive...", n1->item, n2->item);
+	// 		return 0;
+	// 	}
+	// 	n1 = n1->next->next;
+	// 	n2 = n2->next->next;
+	// 	printf("%d, %d", n1->item, n2->item);
+	// }
+	// return 1;
+
+	while(s->ll.size != 0){
+		int val1 = pop(s);
+		int val2 = pop(s);
+
+		if(val1+1 != val2 && val1-1 != val2){
+			return 0;
+		}
+	}
+	return 1;
+
 }
 
 //////////////////////////////////////////////////////////////////////////////////

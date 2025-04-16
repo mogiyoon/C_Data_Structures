@@ -99,9 +99,19 @@ int main()
 //////////////////////////////////////////////////////////////////////////////////
 
 int countOneChildNodes(BTNode *node)
-
 {
-    /* add your code here */
+    //return the number of nodes that have exactly one child node..
+
+    // 이 코드는 리프 노드가 몇 개인지 세는 로직
+    // if(node==NULL) return 0;
+    // if(node->left==NULL&&node->right==NULL) return 1;
+    // return countOneChildNodes(node->left)+countOneChildNodes(node->right);
+
+    if(node==NULL) return 0;
+    if(node->left==NULL&&node->right!=NULL
+        || node->left!=NULL&&node->right==NULL) return 1;
+    return countOneChildNodes(node->left)+countOneChildNodes(node->right);
+    
 }
 
 ///////////////////////////////////////////////////////////////////////////////////

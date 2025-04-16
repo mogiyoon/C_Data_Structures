@@ -111,7 +111,12 @@ int main()
 
 void removeUntil(Stack *s, int value)
 {
-/* add your code here */
+	//pops all values off a stack of integers until the first occurrence of the chosen value.
+	for(int i=0; i<s->ll.size; i++){
+		if(peek(s)==value) return;
+		pop(s);
+	}
+	
 }
 
 //////////////////////////////////////////////////////////////////////////////////

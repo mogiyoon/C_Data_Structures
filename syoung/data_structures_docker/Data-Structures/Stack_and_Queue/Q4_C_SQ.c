@@ -112,7 +112,19 @@ int main()
 
 void reverse(Queue *q)
 {
-/* add your code here */
+	//reverse a queue using a stack.
+	//only use push() and pop() when adding or removing integers from the stack 
+	//and only use enqueue() and dequeue() when adding or removing integers from the queue.
+	
+	Stack* s = (Stack*)malloc(q->ll.size*sizeof(int));
+	while(q->ll.size!=0){
+		push(s, dequeue(q)); //큐에서 원소를 빼서 스택에 넣기
+	}
+	
+	while(s->ll.size!=0){
+		enqueue(q, pop(s)); //스택에서 원소를 빼서 큐에 다시 넣기
+	}
+
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////

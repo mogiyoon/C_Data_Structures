@@ -102,7 +102,28 @@ int main()
 
 void frontBackSplitLinkedList(LinkedList *ll, LinkedList *resultFrontList, LinkedList *resultBackList)
 {
-	/* add your code here */
+	//splits the singly linked list into two sublists -> front half, back half
+	//number of elements is odd->front list
+	//5/2=2 즉 홀수/2+1까지의 요소를 첫 번째 리스트로, 나머지를 두 번째 리스트로
+
+	ListNode* p = ll->head;
+	ListNode* prev = p;
+	int mid;
+	if(ll->size %2 == 0){
+		mid = ll->size/2-1;
+	}else{
+		mid = ll->size/2;
+	}
+	while(mid--){
+		prev = p;
+		p = p->next; //find the middle spot
+	}
+
+	resultFrontList->head = ll->head;
+	resultBackList->head = p->next;
+	p->next = NULL;
+	
+
 }
 
 ///////////////////////////////////////////////////////////////////////////////////
