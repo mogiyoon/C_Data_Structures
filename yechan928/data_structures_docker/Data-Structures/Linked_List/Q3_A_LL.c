@@ -82,13 +82,52 @@ int main()
 	return 0;
 }
 
-//////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////
+void moveOddItemsToBack(LinkedList *ll){
+	LinkedList* oddList = malloc(sizeof(LinkedList));
+	oddList->head = NULL;
 
-void moveOddItemsToBack(LinkedList *ll)
-{
-	/* add your code here */
+	ListNode* prev = NULL;
+	ListNode* cur;
+	cur = ll->head;
+
+	ListNode* oddCur = NULL;
+
+	while(cur!=NULL){
+		if (cur->item %2 != 0){
+			if(prev==NULL){
+				ll->head = cur->next;
+				cur->next = NULL;
+				if(oddList->head !=NULL){
+					oddCur->next = cur;
+					oddCur = cur;
+				}else{
+					oddList->head = cur;
+					oddCur = cur;
+				}
+
+				cur = ll->head;
+				continue;
+
+			}else{
+				prev -> next = cur->next;
+				cur->next = NULL;
+				if(oddList->head !=NULL){
+					oddCur->next = cur;
+					oddCur = cur;
+				}else{
+					oddList->head = cur;
+					oddCur = cur;
+				}
+				cur = prev->next;
+			}
+		}else{
+			prev = cur;
+			cur = cur->next;
+		}
+	}
+	prev -> next  = oddList->head;
 }
-
 ///////////////////////////////////////////////////////////////////////////////////
 
 void printList(LinkedList *ll){
@@ -107,7 +146,6 @@ void printList(LinkedList *ll){
 	}
 	printf("\n");
 }
-
 
 void removeAllItems(LinkedList *ll)
 {

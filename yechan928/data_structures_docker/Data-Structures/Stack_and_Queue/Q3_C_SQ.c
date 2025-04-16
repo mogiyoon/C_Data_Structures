@@ -100,11 +100,50 @@ int main()
 }
 
 /////////////////////////////////////////////////////////////////////////////////
+// 모든 원소가 연속적이면 1, 연속이 아니라면 0
+// int isStackPairwiseConsecutive(Stack *s)
+// {
+// 	if ((s->ll).head==NULL){
+// 		return 0;
+// 	}
+// 	if ((s->ll).size==1){
+// 		return 1;
+// 	}
 
-int isStackPairwiseConsecutive(Stack *s)
-{
-  /* add your code here */
+// 	int prev, cur;
+// 	prev = pop(s);
+
+// 	while((s->ll).size>0){
+// 		cur = pop(s);
+// 		if(cur==INT_MIN){
+// 			break;
+// 		}
+// 		if ((prev-cur)!=1 && (prev-cur)!=-1){
+// 			return 0;
+// 		}
+// 		prev = cur;
+// 	}
+// 	return 1;
+// }
+
+int isStackPairwiseConsecutive(Stack *s){
+
+	int prev, cur;
+	if ((s->ll).head==NULL || ((s->ll).size)%2!=0){
+		return 0;
+	}
+	else{
+		while((s->ll).size>0){
+			prev = pop(s);
+			cur = pop(s);
+			if ((prev-cur)!=1 &&(prev-cur)!=-1){
+				return 0;
+			}
+		}
+		return 1;
+	}
 }
+
 
 //////////////////////////////////////////////////////////////////////////////////
 
