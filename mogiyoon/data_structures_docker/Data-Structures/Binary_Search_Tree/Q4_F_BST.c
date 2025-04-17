@@ -126,7 +126,7 @@ void postOrderIterativeS1(BSTNode *root)
 			printf("%d ", tmpNode->item);
 
 			//부모 노드의 오른쪽 노드가 있을 경우 한 칸씩 이동하며
-			while (peek(tmpStack)->right != NULL) {
+			if (peek(tmpStack)->right != NULL) {
 				tmpNode = peek(tmpStack)->right;
 				push(tmpStack, tmpNode);
 
