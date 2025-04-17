@@ -90,25 +90,35 @@ int main()
 //////////////////////////////////////////////////////////////////////////////////
 //후위순회
 void postOrderIterativeS1(BSTNode *root){
+	if(root ==NULL);
+
 	Stack* s = malloc(sizeof(Stack));
 	s->top = NULL;
-	BSTNode* nowNode =root;
-	push(s,nowNode);
-
-	while(nowNode!=NULL && s->top != NULL){
-		if(nowNode->right!=NULL){
-			push(s,nowNode->right);
+	
+	BSTNode* cur  = root;
+	BSTNode *lastVisited = NULL;    // 직전에 출력된(또는 pop된) 노드
+	
+	while(cur != NULL||!isEmpty(s)){
+		//1. 왼쪽으로 쭉 가면서 스택에 넣기 
+		if (cur != NULL){
+			push(s, cur);
+			cur = cur->left;
 		}
-		if(nowNode->left != NULL){
-			push(s,nowNode->left);
+		 // 2) 왼쪽 끝에 도달했으면 스택 최상단 보고 처리 결정
+		 else {
+            BSTNode *peekNode = peek(s);
+            // 2‑1) 아직 처리하지 않은 오른쪽 자식이 있으면, 그쪽으로 이동
+            if (peekNode->right != NULL && lastVisited != peekNode->right) {
+                cur = peekNode->right;
+            }
+            // 2‑2) 그렇지 않다면 이 노드를 pop·출력
+            else {
+                lastVisited = pop(s);
+                printf("%d ", lastVisited->item);
+			}
 		}
-		nowNode =pop(s);
-		printf("%d ",nowNode->item);
-		nowNode =pop(s);
-		printf("%d ",nowNode->item);
-		nowNode =pop(s);
-		printf("%d ",nowNode->item);
 	}
+	free(s);
 }
 
 ///////////////////////////////////////////////////////////////////////////////

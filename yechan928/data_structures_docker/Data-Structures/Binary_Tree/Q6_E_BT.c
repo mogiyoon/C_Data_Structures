@@ -105,11 +105,12 @@ int main()
 // 주어진 m보다 작은 값을 출력
 void printSmallerValues(BTNode *node, int m){
     if (node == NULL) return;
-    printSmallerValues(node->left,m);
-    printSmallerValues(node->right,m);
     if (node->item<m){
         printf("%d ",node->item);
     }
+    printSmallerValues(node->left,m);
+    printSmallerValues(node->right,m);
+  
 }
 
 //////////////////////////////////////////////////////////////////////////////////
