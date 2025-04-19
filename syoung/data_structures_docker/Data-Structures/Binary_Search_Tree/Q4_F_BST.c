@@ -89,10 +89,43 @@ int main()
 
 //////////////////////////////////////////////////////////////////////////////////
 
+
 void postOrderIterativeS1(BSTNode *root)
 {
 	 /* add your code here */
+	if(root == NULL) return;
+	// postOrderIterativeS1(root->left);
+	// postOrderIterativeS1(root->right);
+	// printf("%i ", root->item);
+
+	//////////// using stack
+
+	Stack s;
+	s.top = NULL;
+	push(&s, root);
+	int visit = root->item;
+	
+	while(!isEmpty(&s)){
+		if(peek(&s)->right != NULL && peek(&s)->right->item == visit){ //오른쪽 노드를 방문했으면
+			BSTNode* cur = pop(&s); //pop(방문)
+			visit = cur->item;
+			printf("%i ", cur->item);
+			continue;
+		}
+		while(peek(&s)->left != NULL && peek(&s)->left->item != visit){ //스택에 왼쪽 노드 삽입
+			push(&s, peek(&s)->left);
+		}
+		if(peek(&s)->right == NULL){ //오른쪽 노드가 없으면
+			BSTNode* cur = pop(&s); //pop(방문)
+			visit = cur->item;
+			printf("%i ", cur->item);
+		}
+		else{ //오른쪽 노드가 있으면
+			push(&s, peek(&s)->right); //오른쪽 노드를 삽입
+		}
+	}
 }
+
 
 ///////////////////////////////////////////////////////////////////////////////
 
