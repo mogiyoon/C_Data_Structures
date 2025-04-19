@@ -88,9 +88,38 @@ int main()
 
 //////////////////////////////////////////////////////////////////////////////////
 
+
 void inOrderTraversal(BSTNode *root)
 {
-	 /* add your code here */
+	//중위순회
+	Stack* stk = (Stack*)malloc(sizeof(Stack));
+	push(stk, root);
+
+	BSTNode* cur;
+	while(!isEmpty(stk)){
+		cur = pop(stk);
+		//printf("%d ", cur->item);
+
+	   //1. 왼쪽 자식이 있으면 왼쪽 노드를 계속 삽입
+	   while(cur->left != NULL){
+			push(stk, cur->left);
+			//printf("1. pushed %d ", cur->left->item);
+			cur = cur->left;
+	   }
+
+	   //2. 왼쪽 자식이 없으면 pop하고 pop한 노드의 오른쪽 자식이 있는지 확인
+	   //2-1. 오른쪽 자식이 있다면 스택에 넣고 다시 1번 진행
+	   cur = pop(stk);
+	   printf("%d ", cur->item);
+	   if(cur->right != NULL){
+			push(stk, cur->right);
+			printf("2. pushed %d ", cur->left->item);
+			cur = cur->right;
+	   }
+		//2-2. 오른쪽 자식이 없다면 스택에서 한 번 더 pop (while문 재실행)
+			
+	   
+	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////
